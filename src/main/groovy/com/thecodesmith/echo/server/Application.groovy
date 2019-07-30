@@ -1,4 +1,4 @@
-package echo.server
+package com.thecodesmith.echo.server
 
 import io.micronaut.runtime.Micronaut
 import groovy.transform.CompileStatic

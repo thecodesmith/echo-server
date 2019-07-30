@@ -5,14 +5,12 @@ plugins {
     id "application"
 }
 
-
-
 version "0.1"
-group "echo.server"
+group "com.thecodesmith.echo.server"
 
 repositories {
     mavenCentral()
-    maven { url "https://jcenter.bintray.com" }
+    jcenter()
 }
 
 dependencyManagement {
@@ -43,7 +41,7 @@ dependencies {
 
 test.classpath += configurations.developmentOnly
 
-mainClassName = "echo.server.Application"
+mainClassName = "com.thecodesmith.echo.server.Application"
 tasks.withType(GroovyCompile) {
     groovyOptions.forkOptions.jvmArgs.add('-Dgroovy.parameters=true')
 }
