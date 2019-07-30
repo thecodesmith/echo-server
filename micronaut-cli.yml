@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: echo.server
+---
+testFramework: spock
+sourceLanguage: groovy
