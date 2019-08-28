@@ -6,7 +6,7 @@ metadata:
     app: echo
 spec:
   rules:
-  - host: echo.staging.jamf.build
+  - host: echo.mycompany.com
     http:
       paths:
       - path: /
