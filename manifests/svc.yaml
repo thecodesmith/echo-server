@@ -1,10 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
+  name: echo
   labels:
     app: echo
-  name: echo
-  namespace: test
 spec:
   selector:
     app: echo

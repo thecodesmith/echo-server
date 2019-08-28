@@ -2,7 +2,8 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: echo
-  namespace: test
+  labels:
+    app: echo
 spec:
   rules:
   - host: echo.staging.jamf.build

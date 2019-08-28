@@ -10,6 +10,10 @@ import com.bmuschko.gradle.docker.tasks.image.*
 
 group 'com.thecodesmith'
 
+ext {
+    namespace = 'test'
+}
+
 repositories {
     mavenCentral()
     jcenter()
@@ -75,3 +79,14 @@ dockerCreateDockerfile {
 
 run.classpath += configurations.developmentOnly
 run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
+
+tasks.create('kubectlInstall', Exec) {
+    commandLine 'kubectl', 'apply', '-n', namespace,
+            '-f', 'manifests/deployment.yaml',
+            '-f', 'manifests/svc.yaml',
+            '-f', 'manifests/ingress.yaml'
+}
+
+tasks.create('kubectlUninstall', Exec) {
+    commandLine 'kubectl', 'delete', 'deployment,service,ingress', 'echo'
+}
