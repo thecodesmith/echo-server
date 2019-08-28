@@ -1,12 +1,6 @@
 VERSION ?= 1.0.0
 NAMESPACE = test
 
-docker-build:
-	docker build -t docker.jamf.build/echo-server:$(VERSION) .
-
-docker-push:
-	docker push docker.jamf.build/echo-server:$(VERSION)
-
 install:
 	kubectl apply -n $(NAMESPACE)    \
 		-f manifests/deployment.yaml \

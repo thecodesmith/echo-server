@@ -18,6 +18,6 @@ spec:
         app: echo
     spec:
       containers:
-      - image: docker.jamf.build/echo-server:1.0.0
+      - name: echo-server
+        image: thecodesmith/echo-server:0.1.0
         imagePullPolicy: Always
-        name: echo-server
