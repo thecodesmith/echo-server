@@ -81,10 +81,7 @@ run.classpath += configurations.developmentOnly
 run.jvmArgs('-noverify', '-XX:TieredStopAtLevel=1', '-Dcom.sun.management.jmxremote')
 
 tasks.create('kubectlInstall', Exec) {
-    commandLine 'kubectl', 'apply', '-n', namespace,
-            '-f', 'manifests/deployment.yaml',
-            '-f', 'manifests/svc.yaml',
-            '-f', 'manifests/ingress.yaml'
+    commandLine 'kubectl', 'apply', '-n', namespace, '-f', 'manifests'
 }
 
 tasks.create('kubectlUninstall', Exec) {
