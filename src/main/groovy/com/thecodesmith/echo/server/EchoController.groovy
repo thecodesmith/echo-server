@@ -23,7 +23,7 @@ class EchoController {
     }
 
     @Post('{path:.*}')
-    @Consumes([MediaType.APPLICATION_JSON, MediaType.TEXT_XML])
+    @Consumes([MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.TEXT_PLAIN])
     String post(HttpRequest request, @Body String body, @Header String contentType, String path) {
         def headers = request.headers.asMap()
                 .sort { it.key }
@@ -33,8 +33,10 @@ class EchoController {
         def content
         if (contentType == MediaType.APPLICATION_JSON) {
             content = JsonOutput.prettyPrint(body)
-        } else {
+        } else if (contentType == MediaType.TEXT_XML) {
             content = XmlUtil.serialize(body)
+        } else {
+            content = body
         }
 
         def response = """
