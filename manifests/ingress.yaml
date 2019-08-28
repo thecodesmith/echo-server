@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: echo
+  namespace: test
+spec:
+  rules:
+  - host: echo.staging.jamf.build
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: echo
+          servicePort: 8080
