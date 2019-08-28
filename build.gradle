@@ -1,12 +1,12 @@
 plugins {
-    id "io.spring.dependency-management" version "1.0.6.RELEASE"
-    id "groovy"
-    id "com.github.johnrengelman.shadow" version "4.0.2"
-    id "application"
+    id 'io.spring.dependency-management' version '1.0.6.RELEASE'
+    id 'groovy'
+    id 'com.github.johnrengelman.shadow' version '4.0.2'
+    id 'application'
 }
 
-version "0.1"
-group "com.thecodesmith.echo.server"
+version '0.1'
+group 'com.thecodesmith.echo.server'
 
 repositories {
     mavenCentral()
@@ -21,27 +21,36 @@ dependencyManagement {
 
 configurations {
     // for dependencies that are needed for development only
-    developmentOnly 
+    developmentOnly
 }
 
 dependencies {
-    compile "io.micronaut:micronaut-runtime-groovy"
-    compile "io.micronaut:micronaut-validation"
-    compile "io.micronaut:micronaut-http-client"
-    compile "javax.annotation:javax.annotation-api"
-    compile "io.micronaut:micronaut-http-server-netty"
-    compileOnly "io.micronaut:micronaut-inject-groovy"
-    runtime "ch.qos.logback:logback-classic:1.2.3"
-    testCompile("org.spockframework:spock-core") {
-        exclude group: "org.codehaus.groovy", module: "groovy-all"
+    compile 'io.micronaut:micronaut-runtime-groovy'
+    compile 'io.micronaut:micronaut-validation'
+    compile 'io.micronaut:micronaut-http-client'
+    compile 'io.micronaut:micronaut-http-server-netty'
+    compile 'javax.annotation:javax.annotation-api'
+    compile 'org.codehaus.groovy:groovy-json:2.5.6'
+    compile 'org.codehaus.groovy:groovy-xml:2.5.6'
+
+    compileOnly 'io.micronaut:micronaut-inject-groovy'
+
+    runtime 'ch.qos.logback:logback-classic:1.2.3'
+
+    testCompile('org.spockframework:spock-core') {
+        exclude group: 'org.codehaus.groovy', module: 'groovy-all'
     }
-    testCompile "io.micronaut:micronaut-inject-groovy"
-    testCompile "io.micronaut.test:micronaut-test-spock"
+    testCompile 'io.micronaut:micronaut-inject-groovy'
+    testCompile 'io.micronaut.test:micronaut-test-spock'
+
+	developmentOnly 'io.micronaut:micronaut-runtime-osx'
+	developmentOnly 'net.java.dev.jna:jna'
+	developmentOnly 'io.methvin:directory-watcher'
 }
 
 test.classpath += configurations.developmentOnly
 
-mainClassName = "com.thecodesmith.echo.server.Application"
+mainClassName = 'com.thecodesmith.echo.server.Application'
 tasks.withType(GroovyCompile) {
     groovyOptions.forkOptions.jvmArgs.add('-Dgroovy.parameters=true')
 }

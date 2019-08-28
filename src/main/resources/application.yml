@@ -1,3 +1,7 @@
 micronaut:
   application:
     name: echo-server
+  io:
+    watch:
+      paths: src/main
+      restart: true
