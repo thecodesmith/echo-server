@@ -3,10 +3,12 @@ plugins {
     id 'groovy'
     id 'com.github.johnrengelman.shadow' version '4.0.2'
     id 'application'
+    id 'com.bmuschko.docker-java-application' version '4.10.0'
 }
 
-version '0.1'
-group 'com.thecodesmith.echo.server'
+import com.bmuschko.gradle.docker.tasks.image.*
+
+group 'com.thecodesmith'
 
 repositories {
     mavenCentral()
@@ -20,7 +22,6 @@ dependencyManagement {
 }
 
 configurations {
-    // for dependencies that are needed for development only
     developmentOnly
 }
 
@@ -57,6 +58,19 @@ tasks.withType(GroovyCompile) {
 
 shadowJar {
     mergeServiceFiles()
+}
+
+docker {
+    javaApplication {
+        baseImage = 'amazoncorretto:11'
+        tag = "thecodesmith/echo-server:$version"
+        ports = [8080]
+        maintainer = 'Brian Stewart "brian@thecodesmith.com"'
+    }
+}
+
+dockerCreateDockerfile {
+    environmentVariable 'JAVA_OPTS', '-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap'
 }
 
 run.classpath += configurations.developmentOnly

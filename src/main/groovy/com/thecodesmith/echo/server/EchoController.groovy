@@ -24,15 +24,25 @@ class EchoController {
 
     @Post('{path:.*}')
     @Consumes([MediaType.APPLICATION_JSON, MediaType.TEXT_XML])
-    String post(String path, @Body String body, @Header String contentType) {
-        def content = contentType == MediaType.APPLICATION_JSON ?
-                JsonOutput.prettyPrint(body) :
-                XmlUtil.serialize(body)
+    String post(HttpRequest request, @Body String body, @Header String contentType, String path) {
+        def headers = request.headers.asMap()
+                .sort { it.key }
+                .collect { "Header: $it.key: $it.value" }
+                .join('\n')
+
+        def content
+        if (contentType == MediaType.APPLICATION_JSON) {
+            content = JsonOutput.prettyPrint(body)
+        } else {
+            content = XmlUtil.serialize(body)
+        }
 
         def response = """
                 |Request: POST /$path
                 |Content-Type: $contentType
-                |Body: \n$content """.stripMargin()
+                |$headers
+                |Body:\n$content
+                |""".stripMargin()
 
         println response
         response
