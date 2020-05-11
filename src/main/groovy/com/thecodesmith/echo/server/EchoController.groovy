@@ -16,19 +16,21 @@ import io.micronaut.http.annotation.Post
 class EchoController {
 
     @Get('{path:.*}')
-    String echo(String path) {
-        def response = "Request: GET /$path"
+    String echo(HttpRequest request, String path) {
+        def headers = getHeaders(request)
+        def response = """
+                |Request: GET /$path
+                |$headers
+                |""".stripMargin()
+
         println response
         response
     }
 
     @Post('{path:.*}')
-    @Consumes([MediaType.APPLICATION_JSON, MediaType.TEXT_XML, MediaType.TEXT_PLAIN])
+    @Consumes(MediaType.ALL)
     String post(HttpRequest request, @Body String body, @Header String contentType, String path) {
-        def headers = request.headers.asMap()
-                .sort { it.key }
-                .collect { "Header: $it.key: $it.value" }
-                .join('\n')
+        def headers = getHeaders(request)
 
         def content
         if (contentType == MediaType.APPLICATION_JSON) {
@@ -48,5 +50,12 @@ class EchoController {
 
         println response
         response
+    }
+
+    String getHeaders(HttpRequest request) {
+        request.headers.asMap()
+                .sort { it.key }
+                .collect { "Header: $it.key: $it.value" }
+                .join('\n')
     }
 }
